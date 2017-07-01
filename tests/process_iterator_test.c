@@ -28,7 +28,15 @@
 #include <signal.h>
 #include <string.h>
 
-#ifdef __APPLE__ || __FREEBSD__
+#ifdef __APPLE__ 
+    #define _apple_or_freebsd_
+#else 
+    #ifdef __FREEBSD__
+        #define _apple_or_freebsd_
+    #endif
+#endif
+
+#ifdef _apple_or_freebsd_
 #include <libgen.h>
 #endif
 
