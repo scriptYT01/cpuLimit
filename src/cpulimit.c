@@ -337,14 +337,14 @@ void limit_process(pid_t pid, double limit, int include_children)
                 __tDiff2 = __tDiff1 >> 6 ; // div 64, about 1 minut
                 __tDiff3 = __tDiff2 % 10 ; // every 10 mninuts.
                 if ( __tDiff3 == 9 ) {
-					fprintf(stderr , " middle -- sleep 65 , now %ld , %ld , %ld : start %ld , now %ld \n" 
-                            , __tDiff1 , __tDiff2 , __tDiff3     , __tNow , __tStart );
+					fprintf(stderr , " middle -- sleep 65 , now %ld , %ld , %ld : start %ld , now %ld , diff9 %ld \n" 
+                            , __tDiff1 , __tDiff2 , __tDiff3     , __tStart , __tNow , __tDiff9 );
                     sleep(65) ;
                 }
             }
-            if ( 1 && __tDiff9 && 0xFFF == 3 ) {
-					fprintf(stderr , " debuging -- sleep 65 , now %ld , %ld , %ld : start %ld , now %ld \n" 
-                            , __tDiff1 , __tDiff2 , __tDiff3     , __tNow , __tStart );
+            if ( 1 && (__tDiff9 & 0xFFF) == 3 ) {
+					fprintf(stderr , " debuging -- sleep 65 , now %ld , %ld , %ld : start %ld , now %ld , diff9 %ld \n" 
+                            , __tDiff1 , __tDiff2 , __tDiff3     , __tStart , __tNow , __tDiff9 );
             }
 #endif
 		}

@@ -16,3 +16,7 @@ gs:
 	git status
 gc :
 	git commit -a
+c:clean
+
+up :
+	git push -u origin master
