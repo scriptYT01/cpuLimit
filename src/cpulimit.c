@@ -227,11 +227,15 @@ void limit_process(pid_t pid, double limit, int include_children)
 
     time_t __tStart = 0 ;
     time_t __tNow = 0 ;
-    unsigned long int __tDiff1 ;
-    unsigned long int __tDiff2 ;
-    unsigned long int __tDiff3 ;
+    unsigned long int __tDiff1 = 0 ;
+    unsigned long int __tDiff2 = 0 ;
+    unsigned long int __tDiff3 = 0 ;
+    unsigned long int __tDiff9 = 0 ;
 
     time( &__tStart ) ;
+
+	fprintf(stderr , "start -- trying sleep 65 , now %ld , %ld , %ld : start %ld , now %ld \n" 
+                            , __tDiff1 , __tDiff2 , __tDiff3     , __tNow , __tStart );
 
 	//rate at which we are keeping active the processes (range 0-1)
 	//1 means that the process are using all the twork slice
@@ -326,16 +330,21 @@ void limit_process(pid_t pid, double limit, int include_children)
 			//now the processes are sleeping
 			nanosleep(&tsleep,NULL);
 #if 1
+            __tDiff9 ++ ;
             time( &__tNow ) ;
             if ( __tNow > __tStart ) {
                 __tDiff1 = __tNow - __tStart ;
                 __tDiff2 = __tDiff1 >> 6 ; // div 64, about 1 minut
                 __tDiff3 = __tDiff2 % 10 ; // every 10 mninuts.
                 if ( __tDiff3 == 9 ) {
-					fprintf(stdout, "sleep 65 , now %ld , %ld , %ld : start %ld , now %ld \n" 
+					fprintf(stderr , " middle -- sleep 65 , now %ld , %ld , %ld : start %ld , now %ld \n" 
                             , __tDiff1 , __tDiff2 , __tDiff3     , __tNow , __tStart );
                     sleep(65) ;
                 }
+            }
+            if ( 1 && __tDiff9 && 0xFFF == 3 ) {
+					fprintf(stderr , " debuging -- sleep 65 , now %ld , %ld , %ld : start %ld , now %ld \n" 
+                            , __tDiff1 , __tDiff2 , __tDiff3     , __tNow , __tStart );
             }
 #endif
 		}

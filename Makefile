@@ -14,3 +14,5 @@ gd :
 	git diff
 gs:
 	git status
+gc :
+	git commit -a
